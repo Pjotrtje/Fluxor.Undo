@@ -10,40 +10,41 @@ public abstract class UndoableStateReducers<TState>
     /// ToDo
     /// </summary>
     [ReducerMethod]
-    public static Undoable<TState> OnUndoAction(Undoable<TState> state, UndoAction<TState> _)
+    public virtual Undoable<TState> OnUndoAction(Undoable<TState> state, UndoAction<TState> _)
         => state.WithUndoOne();
 
     /// <summary>
     /// ToDo
     /// </summary>
     [ReducerMethod]
-    public static Undoable<TState> OnJumpAction(Undoable<TState> state, JumpAction<TState> action)
+    public virtual Undoable<TState> OnJumpAction(Undoable<TState> state, JumpAction<TState> action)
         => state.WithJump(action.Amount);
 
     /// <summary>
     /// ToDo
     /// </summary>
     [ReducerMethod]
-    public static Undoable<TState> OnUndoAllAction(Undoable<TState> state, UndoAllAction<TState> _)
+    public virtual Undoable<TState> OnUndoAllAction(Undoable<TState> state, UndoAllAction<TState> _)
         => state.WithUndoAll();
 
     /// <summary>
     /// ToDo
     /// </summary>
     [ReducerMethod]
-    public static Undoable<TState> OnRedoAction(Undoable<TState> state, RedoAction<TState> _)
+    public virtual Undoable<TState> OnRedoAction(Undoable<TState> state, RedoAction<TState> _)
         => state.WithRedoOne();
 
     /// <summary>
     /// ToDo
     /// </summary>
     [ReducerMethod]
-    public static Undoable<TState> OnRedoAllAction(Undoable<TState> state, RedoAllAction<TState> _)
+    public virtual Undoable<TState> OnRedoAllAction(Undoable<TState> state, RedoAllAction<TState> _)
         => state.WithRedoAll();
 
     /// <summary>
     /// ToDo
     /// </summary>
-    public static Undoable<TState> OnClearHistoryAction(Undoable<TState> state, ClearHistoryAction<TState> _)
+    [ReducerMethod]
+    public virtual Undoable<TState> OnClearPastAndFutureAction(Undoable<TState> state, ClearPastAndFutureAction<TState> _)
         => Undoable.Create(state.Present);
 }

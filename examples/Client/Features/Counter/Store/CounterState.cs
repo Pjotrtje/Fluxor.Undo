@@ -2,9 +2,20 @@
 
 namespace FluxorBlazorWeb.ReduxDevToolsTutorial.Client.Features.Counter.Store;
 
-[FeatureState(Name = "Counter")]
-public record CounterState(int ClickCount)
+//[FeatureState(Name = "Counter")]
+//public record CounterState(int ClickCount)
+//{
+//    private CounterState() : this(0)
+//    { }
+//}
+
+public record CounterState(int ClickCount);
+
+public sealed class CounterFeature : Feature<CounterState>
 {
-    private CounterState() : this(0)
-    { }
+    public override string GetName()
+        => "Counter";
+
+    protected override CounterState GetInitialState()
+        => new(0);
 }

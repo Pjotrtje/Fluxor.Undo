@@ -3,7 +3,7 @@
   <PropertyGroup>
     <PackageId>Fluxor.Undo</PackageId>
     <Description>Simple undo/redo functionality for fluxor.</Description>
-    <PackageTags>fluxor undo redo</PackageTags>
+    <PackageTags>fluxor undo redo time travel redux</PackageTags>
 
     <Version></Version>
     <Authors>Pieter van Sambeek</Authors>
