@@ -1,5 +1,3 @@
 ﻿namespace FluxorBlazorWeb.ReduxDevToolsTutorial.Client.Features.UndoableCounter.Store;
 
-public class IncrementCounterAction
-{
-}
+public record IncrementCounterAction(int Amount);

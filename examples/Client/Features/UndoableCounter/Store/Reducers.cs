@@ -1,10 +1,14 @@
 ﻿using Fluxor;
+using Fluxor.Undo;
 
 namespace FluxorBlazorWeb.ReduxDevToolsTutorial.Client.Features.UndoableCounter.Store;
 
-public static class Reducers
+public class Reducers : UndoableStateReducers<CounterState>
 {
     [ReducerMethod]
-    public static CounterState ReduceIncrementCounterAction(CounterState state, IncrementCounterAction action) =>
-        new(clickCount: state.ClickCount + 1);
+    public static Undoable<CounterState> ReduceIncrementCounterAction(Undoable<CounterState> state, IncrementCounterAction action)
+        => state.WithNewPresent(p => p with
+        {
+            ClickCount = p.ClickCount + action.Amount,
+        });
 }

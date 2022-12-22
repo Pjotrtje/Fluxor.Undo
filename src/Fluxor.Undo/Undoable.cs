@@ -82,6 +82,27 @@ public sealed record Undoable<TState>(
     /// <summary>
     /// ToDo
     /// </summary>
+    public Undoable<TState> WithInlineEditedPresent(TState present)
+        => WithInlineEditedPresent(_ => present);
+
+    /// <summary>
+    /// ToDo
+    /// </summary>
+    public Undoable<TState> WithInlineEditedPresent(Func<TState, TState> map)
+    {
+        var newPresent = map(Present);
+
+        return newPresent.Equals(Present)
+            ? this
+            : new(
+                Past,
+                newPresent,
+                Array.Empty<TState>());
+    }
+
+    /// <summary>
+    /// ToDo
+    /// </summary>
     public Undoable<TState> WithUndoAll()
         => WithJump(-Past.Count);
 

@@ -1,4 +1,5 @@
 ﻿using Fluxor;
+using Fluxor.Undo;
 
 using FluxorBlazorWeb.ReduxDevToolsTutorial.Client.Features.UndoableCounter.Store;
 
@@ -9,14 +10,8 @@ namespace FluxorBlazorWeb.ReduxDevToolsTutorial.Client.Features.UndoableCounter;
 public partial class UndoableCounter
 {
     [Inject]
-    private IState<CounterState> CounterState { get; set; } = null!;
+    private IState<Undoable<CounterState>> UndoableCounterState { get; set; } = null!;
 
     [Inject]
     public IDispatcher Dispatcher { get; set; } = null!;
-
-    private void IncrementCount()
-    {
-        var action = new IncrementCounterAction();
-        Dispatcher.Dispatch(action);
-    }
 }

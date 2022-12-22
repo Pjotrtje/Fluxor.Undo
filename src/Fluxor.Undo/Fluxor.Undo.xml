@@ -154,6 +154,16 @@
             ToDo
             </summary>
         </member>
+        <member name="M:Fluxor.Undo.Undoable`1.WithInlineEditedPresent(`0)">
+            <summary>
+            ToDo
+            </summary>
+        </member>
+        <member name="M:Fluxor.Undo.Undoable`1.WithInlineEditedPresent(System.Func{`0,`0})">
+            <summary>
+            ToDo
+            </summary>
+        </member>
         <member name="M:Fluxor.Undo.Undoable`1.WithUndoAll">
             <summary>
             ToDo

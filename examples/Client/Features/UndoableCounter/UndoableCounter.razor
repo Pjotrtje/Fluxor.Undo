@@ -1,8 +1,15 @@
 ﻿@page "/undoablecounter"
+@using FluxorBlazorWeb.ReduxDevToolsTutorial.Client.Features.UndoableCounter.Store
+@using Fluxor.Undo
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent
 
 <h1>Counter</h1>
 
-<p>Current count: @CounterState.Value.ClickCount</p>
+<p>Current count: @UndoableCounterState.Value.Present.ClickCount</p>
 
-<button class="btn btn-primary" @onclick=IncrementCount>Click me</button>
+<button class="btn btn-primary" @onclick=@(() => Dispatcher.Dispatch(new IncrementCounterAction(1)))>+1</button>
+<button class="btn btn-primary" @onclick=@(() => Dispatcher.Dispatch(new IncrementCounterAction(10)))>+10</button>
+<button disabled="@UndoableCounterState.Value.TimeTravelInfo.HasNoPast" class="btn btn-primary" @onclick=@(() => Dispatcher.Dispatch(new UndoAllAction<CounterState>()))>&lt;&lt;</button>
+<button disabled="@UndoableCounterState.Value.TimeTravelInfo.HasNoPast" class="btn btn-primary" @onclick=@(() => Dispatcher.Dispatch(new UndoAction<CounterState>()))>&lt;</button>
+<button disabled="@UndoableCounterState.Value.TimeTravelInfo.HasNoFuture" class="btn btn-primary" @onclick=@(() => Dispatcher.Dispatch(new RedoAction<CounterState>()))>&gt;</button>
+<button disabled="@UndoableCounterState.Value.TimeTravelInfo.HasNoFuture" class="btn btn-primary" @onclick=@(() => Dispatcher.Dispatch(new RedoAllAction<CounterState>()))>&gt;&gt;</button>

@@ -3,15 +3,8 @@
 namespace FluxorBlazorWeb.ReduxDevToolsTutorial.Client.Features.Counter.Store;
 
 [FeatureState(Name = "Counter")]
-public class CounterState
+public record CounterState(int ClickCount)
 {
-    public int ClickCount { get; }
-
-    private CounterState()
+    private CounterState() : this(0)
     { }
-
-    public CounterState(int clickCount)
-    {
-        ClickCount = clickCount;
-    }
 }

@@ -13,10 +13,4 @@ public partial class Counter
 
     [Inject]
     public IDispatcher Dispatcher { get; set; } = null!;
-
-    private void IncrementCount()
-    {
-        var action = new IncrementCounterAction();
-        Dispatcher.Dispatch(action);
-    }
 }
