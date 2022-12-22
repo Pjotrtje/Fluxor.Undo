@@ -1,6 +1,5 @@
-﻿namespace FluxorBlazorWeb.ReduxDevToolsTutorial.Client.Store
+﻿namespace FluxorBlazorWeb.ReduxDevToolsTutorial.Client.Store;
+
+public class IncrementCounterAction
 {
-	public class IncrementCounterAction
-	{
-	}
 }

@@ -4,12 +4,17 @@
         <name>Fluxor.Undo</name>
     </assembly>
     <members>
-        <member name="T:Fluxor.Undo.ITimeTravelAction">
+        <member name="T:Fluxor.Undo.ClearHistoryAction`1">
             <summary>
             ToDo
             </summary>
         </member>
-        <member name="T:Fluxor.Undo.ITimeTravelAction`1">
+        <member name="T:Fluxor.Undo.IUndoableAction`1">
+            <summary>
+            ToDo
+            </summary>
+        </member>
+        <member name="T:Fluxor.Undo.IUndoableAction">
             <summary>
             ToDo
             </summary>
@@ -24,16 +29,6 @@
             ToDo
             </summary>
         </member>
-        <member name="T:Fluxor.Undo.UndoAction`1">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="T:Fluxor.Undo.UndoAllAction`1">
-            <summary>
-            ToDo
-            </summary>
-        </member>
         <member name="T:Fluxor.Undo.RedoAction`1">
             <summary>
             ToDo
@@ -44,7 +39,12 @@
             ToDo
             </summary>
         </member>
-        <member name="T:Fluxor.Undo.ClearHistoryAction`1">
+        <member name="T:Fluxor.Undo.UndoAction`1">
+            <summary>
+            ToDo
+            </summary>
+        </member>
+        <member name="T:Fluxor.Undo.UndoAllAction`1">
             <summary>
             ToDo
             </summary>
@@ -120,6 +120,11 @@
             </summary>
         </member>
         <member name="M:Fluxor.Undo.Undoable.Create``1(``0)">
+            <summary>
+            ToDo
+            </summary>
+        </member>
+        <member name="M:Fluxor.Undo.Undoable.Create``1(System.Collections.Generic.IReadOnlyList{``0},System.Int32)">
             <summary>
             ToDo
             </summary>
