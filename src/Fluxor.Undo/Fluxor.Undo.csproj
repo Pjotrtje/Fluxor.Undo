@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>Fluxor.Undo</PackageId>
+    <Description>Simple undo/redo functionality for fluxor.</Description>
+    <PackageTags>fluxor undo redo</PackageTags>
+
+    <Version></Version>
+    <Authors>Pieter van Sambeek</Authors>
+    <PackageIcon>icon-128x128.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/Pjotrtje/Fuxor.Undo</PackageProjectUrl>
+    <Copyright>Copyright Pieter van Sambeek</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReleaseNotes>https://github.com/Pjotrtje/Fuxor.Undo/releases/</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <DocumentationFile>$(MSBuildProjectName).xml</DocumentationFile>
+
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources> 
+    <Deterministic>true</Deterministic> 
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="$(MSBuildProjectName).xml" />
+    <AdditionalFiles Include="$(MSBuildProjectName).xml" Link="_\$(MSBuildProjectName).xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="$(MSBuildProjectDirectory)\$(MSBuildProjectName).csproj.DotSettings" />
+    <AdditionalFiles Include="$(MSBuildProjectDirectory)\$(MSBuildProjectName).csproj.DotSettings" Link="_\$(MSBuildProjectName).csproj.DotSettings" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\docs\icon-128x128.png" Link="_\icon-128x128.png" Pack="true" PackagePath="" />
+    <None Include="..\..\README.md" Link="_\README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Fluxor" Version="5.7.0" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+  </ItemGroup>
+
+</Project>

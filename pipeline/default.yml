@@ -1,0 +1,137 @@
+trigger:
+- main
+
+pool:
+  vmImage: windows-latest
+
+variables:
+- name  : version
+  value : '1.0.0'
+
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    steps:    
+    - task: PowerShell@2
+      displayName: 'Set VersionWithPostfix'
+      name: SetVersionWithPostfix
+      inputs:
+        targetType: 'inline'
+        script: |
+            $isPreRelease = ($env:Build_SourceBranch -ne 'refs/heads/main')
+            $versionWithPostfix = If ($isPreRelease) 
+              { "$(version)" + "-prerelease-" + (Get-Date -Format yyyyMMddHHmmss) } 
+              Else 
+              { "$(version)" }
+
+            Write-Host "env:Build_SourceBranch = $env:Build_SourceBranch"
+            Write-Host "isPreRelease = $isPreRelease"
+            Write-Host "versionWithPostfix = $versionWithPostfix"
+
+            Write-Host "##vso[task.setvariable variable=isPreRelease;]$isPreRelease"
+            Write-Host "##vso[task.setvariable variable=isPreRelease;isOutput=true;]$isPreRelease"
+            Write-Host "##vso[task.setvariable variable=versionWithPostfix;]$versionWithPostfix"
+            Write-Host "##vso[task.setvariable variable=versionWithPostfix;isOutput=true;]$versionWithPostfix"
+
+    - task: PowerShell@2
+      displayName: 'VersionWithPostfix to csproj'
+      inputs:
+        targetType: 'inline'
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
+        script: |
+            function Update-Version ([string] $fullName) 
+            {
+                Write-Host "$fullName => $(versionWithPostfix)"
+
+                $originalContent = Get-Content $fullName
+                $newContent = $originalContent.Replace("</Version>", "$(versionWithPostfix)</Version>");
+                Set-Content -Path $fullName -Value $newContent
+            }
+        
+            Get-ChildItem -Path src\*.csproj -Recurse | Foreach-Object { Update-Version $_.FullName }
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore NuGet'
+      inputs:
+        command: 'restore'
+        projects: '**/*.sln'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Build'
+      inputs:
+        command: 'build'
+        arguments: '--configuration Release --no-restore'
+        projects: '**/*.sln'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Unit test'
+      inputs:
+        command: 'test'
+        projects: '**/*.sln'
+        arguments: '--configuration Release --no-build --collect:"XPlat Code Coverage"'
+        nobuild: true
+
+    - task: reportgenerator@4
+      displayName: 'Merge code coverage report'
+      inputs:
+        reports: '$(Agent.TempDirectory)/*/coverage.cobertura.xml'
+        targetdir: '$(Agent.TempDirectory)/CombinedCoverageReport'
+        reporttypes: 'Cobertura'
+
+    - task: PublishCodeCoverageResults@1
+      displayName: 'Publish code coverage report'
+      inputs:
+        codeCoverageTool: 'Cobertura'
+        summaryFileLocation: '$(Agent.TempDirectory)/CombinedCoverageReport/*.*'
+        failIfCoverageEmpty: true
+
+    - task: CopyFiles@2
+      displayName: 'Copy NuGet to Publish folder'
+      inputs:
+        Contents: |
+            **/*.nupkg
+            **/*.snupkg
+        TargetFolder: '$(Agent.TempDirectory)/NuGet'
+        flattenFolders: true
+    
+    - publish: '$(Agent.TempDirectory)/NuGet'
+      displayName: 'Publishing Artifact - NuGet'
+      artifact: NuGet
+
+- stage: Release
+  condition: and(succeeded(), eq(variables['MustPushNuGet'], 'true'))
+  dependsOn: ['Build']
+  variables:
+    versionWithPostfix: $[ stageDependencies.Build.Build.outputs['SetVersionWithPostfix.versionWithPostfix'] ]
+    isPreRelease: $[ stageDependencies.Build.Build.outputs['SetVersionWithPostfix.isPreRelease'] ]
+  jobs:
+  - deployment: NuGet
+    environment: 'NuGet'
+    strategy:
+     runOnce:
+       deploy:
+        steps:
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: 'current'
+              artifactName: 'NuGet'
+              targetPath: '$(Agent.TempDirectory)/NuGet'
+
+          - task: GitHubRelease@1
+            displayName: 'GitHub release'
+            inputs: 
+              gitHubConnection: 'GitHub'
+              tagSource: userSpecifiedTag
+              tag: '$(versionWithPostfix)'
+              title: '$(versionWithPostfix)'
+              changeLogCompareToRelease: lastNonDraftRelease
+              changeLogType: 'issueBased'
+              isPreRelease: $(isPreRelease)
+
+          - task: NuGetCommand@2
+            inputs:
+              command: 'push'
+              packagesToPush: '$(Agent.TempDirectory)/NuGet/**/*.nupkg;!$(Agent.TempDirectory)/NuGet/**/*.symbols.nupkg'
+              nuGetFeedType: 'external'
+              publishFeedCredentials: 'NuGet.org'
