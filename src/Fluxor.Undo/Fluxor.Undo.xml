@@ -4,7 +4,7 @@
         <name>Fluxor.Undo</name>
     </assembly>
     <members>
-        <member name="T:Fluxor.Undo.ClearHistoryAction`1">
+        <member name="T:Fluxor.Undo.ClearPastAndFutureAction`1">
             <summary>
             ToDo
             </summary>
@@ -109,7 +109,7 @@
             ToDo
             </summary>
         </member>
-        <member name="M:Fluxor.Undo.UndoableStateReducers`1.OnClearHistoryAction(Fluxor.Undo.Undoable{`0},Fluxor.Undo.ClearHistoryAction{`0})">
+        <member name="M:Fluxor.Undo.UndoableStateReducers`1.OnClearPastAndFutureAction(Fluxor.Undo.Undoable{`0},Fluxor.Undo.ClearPastAndFutureAction{`0})">
             <summary>
             ToDo
             </summary>
