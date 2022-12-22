@@ -3,7 +3,7 @@
 
 Fluxor.Undo is a library to add redo/undo functionality to [Fluxor](https://github.com/mrpmorris/Fluxor). 
 
-![Azure DevOps builds (branch)](https://img.shields.io/azure-devops/build/Pjotrtje/PvSToDo/20/main)
+![Azure DevOps builds (branch)](https://img.shields.io/azure-devops/build/Pjotrtje/PvS/21/main)
 
 ## Goal
 The aim of Fluxor.Undo is removing the hassle of implementing your own undo/redo functionality. The idea is inspired by [redux-undo](https://github.com/omnidan/redux-undo) although the implementation is completely different.
