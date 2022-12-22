@@ -10,4 +10,8 @@
     <PackageReference Condition="'$(TargetFramework)' == 'net6.0'" Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.12" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\..\src\Fluxor.Undo\Fluxor.Undo.csproj" />
+	</ItemGroup>
+
 </Project>

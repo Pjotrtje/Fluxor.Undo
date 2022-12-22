@@ -1,6 +1,6 @@
 ﻿using Fluxor;
 
-namespace FluxorBlazorWeb.ReduxDevToolsTutorial.Client.Store.CounterUseCase;
+namespace FluxorBlazorWeb.ReduxDevToolsTutorial.Client.Features.UndoableCounter.Store;
 
 public static class Reducers
 {

@@ -1,11 +1,12 @@
 ﻿using Fluxor;
+
+using FluxorBlazorWeb.ReduxDevToolsTutorial.Client.Features.UndoableCounter.Store;
+
 using Microsoft.AspNetCore.Components;
-using FluxorBlazorWeb.ReduxDevToolsTutorial.Client.Store.CounterUseCase;
-using FluxorBlazorWeb.ReduxDevToolsTutorial.Client.Store;
 
-namespace FluxorBlazorWeb.ReduxDevToolsTutorial.Client.Pages;
+namespace FluxorBlazorWeb.ReduxDevToolsTutorial.Client.Features.UndoableCounter;
 
-public partial class Counter
+public partial class UndoableCounter
 {
     [Inject]
     private IState<CounterState> CounterState { get; set; } = null!;
