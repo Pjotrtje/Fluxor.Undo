@@ -17,19 +17,22 @@ insert_final_newline = true:error
 
 #### .NET Coding Conventions ####
 
+
+
 # Code
-dotnet_diagnostic.CA1000.severity = none
-dotnet_diagnostic.CA1707.severity = silent 
-dotnet_diagnostic.IDE0022.severity = silent 
-dotnet_diagnostic.IDE0058.severity = silent  
-dotnet_diagnostic.IDE0072.severity = silent  
-dotnet_diagnostic.IDE0042.severity = silent  
-dotnet_diagnostic.IDE0010.severity = silent  
-dotnet_diagnostic.IDE0046.severity = silent  
-dotnet_diagnostic.IDE0130.severity = silent  
-dotnet_diagnostic.IDE0021.severity = silent  
-dotnet_diagnostic.CA1822.severity = suggestion  
-dotnet_diagnostic.CA1848.severity = suggestion  
+dotnet_diagnostic.CS1591.severity = none #Missing XML comment for publicly visible type or member
+dotnet_diagnostic.CA1000.severity = none #Do not declare static members on generic types
+dotnet_diagnostic.CA1707.severity = silent #Identifiers should not contain underscores
+dotnet_diagnostic.IDE0022.severity = silent #Use expression body for methods
+dotnet_diagnostic.IDE0058.severity = silent #Remove unnecessary expression value
+dotnet_diagnostic.IDE0072.severity = silent #Add missing cases to switch expression
+dotnet_diagnostic.IDE0042.severity = silent #Deconstruct variable declaration
+dotnet_diagnostic.IDE0010.severity = silent #Add missing cases to switch statement
+dotnet_diagnostic.IDE0046.severity = silent #Use conditional expression for return
+dotnet_diagnostic.IDE0130.severity = silent #Namespace does not match folder structure
+dotnet_diagnostic.IDE0021.severity = silent #Use expression body for constructors
+dotnet_diagnostic.CA1822.severity = suggestion #Mark members as static
+dotnet_diagnostic.CA1848.severity = suggestion #Use the LoggerMessage delegates
 dotnet_analyzer_diagnostic.severity = error
 csharp_style_namespace_declarations=file_scoped:error
 

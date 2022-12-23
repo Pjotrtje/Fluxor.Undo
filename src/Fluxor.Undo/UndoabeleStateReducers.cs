@@ -1,50 +1,25 @@
 ﻿namespace Fluxor.Undo;
 
-/// <summary>
-/// ToDo
-/// </summary>
-public abstract class UndoableStateReducers<TState>
-    where TState : notnull
+public abstract class UndoableStateReducers<TUndoableState>
+    where TUndoableState : Undoable<TUndoableState>
 {
-    /// <summary>
-    /// ToDo
-    /// </summary>
     [ReducerMethod]
-    public virtual Undoable<TState> OnUndoAction(Undoable<TState> state, UndoAction<TState> _)
+    public TUndoableState OnUndoAction(TUndoableState state, UndoAction<TUndoableState> _)
         => state.WithUndoOne();
 
-    /// <summary>
-    /// ToDo
-    /// </summary>
     [ReducerMethod]
-    public virtual Undoable<TState> OnJumpAction(Undoable<TState> state, JumpAction<TState> action)
+    public TUndoableState OnJumpAction(TUndoableState state, JumpAction<TUndoableState> action)
         => state.WithJump(action.Amount);
 
-    /// <summary>
-    /// ToDo
-    /// </summary>
     [ReducerMethod]
-    public virtual Undoable<TState> OnUndoAllAction(Undoable<TState> state, UndoAllAction<TState> _)
+    public TUndoableState OnUndoAllAction(TUndoableState state, UndoAllAction<TUndoableState> _)
         => state.WithUndoAll();
 
-    /// <summary>
-    /// ToDo
-    /// </summary>
     [ReducerMethod]
-    public virtual Undoable<TState> OnRedoAction(Undoable<TState> state, RedoAction<TState> _)
+    public TUndoableState OnRedoAction(TUndoableState state, RedoAction<TUndoableState> _)
         => state.WithRedoOne();
 
-    /// <summary>
-    /// ToDo
-    /// </summary>
     [ReducerMethod]
-    public virtual Undoable<TState> OnRedoAllAction(Undoable<TState> state, RedoAllAction<TState> _)
+    public TUndoableState OnRedoAllAction(TUndoableState state, RedoAllAction<TUndoableState> _)
         => state.WithRedoAll();
-
-    /// <summary>
-    /// ToDo
-    /// </summary>
-    [ReducerMethod]
-    public virtual Undoable<TState> OnClearPastAndFutureAction(Undoable<TState> state, ClearPastAndFutureAction<TState> _)
-        => Undoable.Create(state.Present);
 }

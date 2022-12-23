@@ -4,195 +4,20 @@
         <name>Fluxor.Undo</name>
     </assembly>
     <members>
-        <member name="T:Fluxor.Undo.ClearPastAndFutureAction`1">
-            <summary>
-            ToDo
-            </summary>
+        <member name="M:Fluxor.Undo.Undoable`2.WithUndoAll">
+            <inheritdoc/>
         </member>
-        <member name="T:Fluxor.Undo.IUndoableAction`1">
-            <summary>
-            ToDo
-            </summary>
+        <member name="M:Fluxor.Undo.Undoable`2.WithUndoOne">
+            <inheritdoc/>
         </member>
-        <member name="T:Fluxor.Undo.IUndoableAction">
-            <summary>
-            ToDo
-            </summary>
+        <member name="M:Fluxor.Undo.Undoable`2.WithRedoOne">
+            <inheritdoc/>
         </member>
-        <member name="T:Fluxor.Undo.JumpAction`1">
-            <summary>
-            ToDo
-            </summary>
+        <member name="M:Fluxor.Undo.Undoable`2.WithRedoAll">
+            <inheritdoc/>
         </member>
-        <member name="M:Fluxor.Undo.JumpAction`1.#ctor(System.Int32)">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="T:Fluxor.Undo.RedoAction`1">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="T:Fluxor.Undo.RedoAllAction`1">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="T:Fluxor.Undo.UndoAction`1">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="T:Fluxor.Undo.UndoAllAction`1">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="T:Fluxor.Undo.TimeTravelInfo">
-            <summary>
-            ToDo
-            </summary>
-            <param name="HasPast">HHHH</param>
-            <param name="HasFuture"></param>
-        </member>
-        <member name="M:Fluxor.Undo.TimeTravelInfo.#ctor(System.Boolean,System.Boolean)">
-            <summary>
-            ToDo
-            </summary>
-            <param name="HasPast">HHHH</param>
-            <param name="HasFuture"></param>
-        </member>
-        <member name="P:Fluxor.Undo.TimeTravelInfo.HasPast">
-            <summary>HHHH</summary>
-        </member>
-        <member name="P:Fluxor.Undo.TimeTravelInfo.HasFuture">
-            <summary></summary>
-        </member>
-        <member name="P:Fluxor.Undo.TimeTravelInfo.HasNoPast">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="P:Fluxor.Undo.TimeTravelInfo.HasNoFuture">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="T:Fluxor.Undo.UndoableStateReducers`1">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="M:Fluxor.Undo.UndoableStateReducers`1.OnUndoAction(Fluxor.Undo.Undoable{`0},Fluxor.Undo.UndoAction{`0})">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="M:Fluxor.Undo.UndoableStateReducers`1.OnJumpAction(Fluxor.Undo.Undoable{`0},Fluxor.Undo.JumpAction{`0})">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="M:Fluxor.Undo.UndoableStateReducers`1.OnUndoAllAction(Fluxor.Undo.Undoable{`0},Fluxor.Undo.UndoAllAction{`0})">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="M:Fluxor.Undo.UndoableStateReducers`1.OnRedoAction(Fluxor.Undo.Undoable{`0},Fluxor.Undo.RedoAction{`0})">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="M:Fluxor.Undo.UndoableStateReducers`1.OnRedoAllAction(Fluxor.Undo.Undoable{`0},Fluxor.Undo.RedoAllAction{`0})">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="M:Fluxor.Undo.UndoableStateReducers`1.OnClearPastAndFutureAction(Fluxor.Undo.Undoable{`0},Fluxor.Undo.ClearPastAndFutureAction{`0})">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="T:Fluxor.Undo.Undoable">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="M:Fluxor.Undo.Undoable.Create``1(``0)">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="M:Fluxor.Undo.Undoable.Create``1(System.Collections.Generic.IReadOnlyList{``0},System.Int32)">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="T:Fluxor.Undo.Undoable`1">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="M:Fluxor.Undo.Undoable`1.#ctor(System.Collections.Generic.IReadOnlyList{`0},`0,System.Collections.Generic.IReadOnlyList{`0})">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="P:Fluxor.Undo.Undoable`1.TimeTravelInfo">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="M:Fluxor.Undo.Undoable`1.WithNewPresent(`0)">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="M:Fluxor.Undo.Undoable`1.WithNewPresent(System.Func{`0,`0})">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="M:Fluxor.Undo.Undoable`1.WithInlineEditedPresent(`0)">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="M:Fluxor.Undo.Undoable`1.WithInlineEditedPresent(System.Func{`0,`0})">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="M:Fluxor.Undo.Undoable`1.WithUndoAll">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="M:Fluxor.Undo.Undoable`1.WithUndoOne">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="M:Fluxor.Undo.Undoable`1.WithRedoOne">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="M:Fluxor.Undo.Undoable`1.WithRedoAll">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="M:Fluxor.Undo.Undoable`1.WithJump(System.Int32)">
-            <summary>
-            ToDo
-            </summary>
-        </member>
-        <member name="T:Fluxor.Undo.UndoableFeature`1">
-            <summary>
-            ToDo
-            </summary>
+        <member name="M:Fluxor.Undo.Undoable`2.WithJump(System.Int32)">
+            <inheritdoc/>
         </member>
     </members>
 </doc>
