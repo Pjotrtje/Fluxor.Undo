@@ -5,7 +5,25 @@ namespace FluxorBlazorWeb.ReduxDevToolsTutorial.Client.Features.UndoableCounter.
 
 public record CounterState(int ClickCount);
 
-#if NET6_0
+#if NET7_0_OR_GREATER
+[FeatureState(Name = "UndoableCounter", CreateInitialStateMethodName = nameof(CreateInitialState))]
+public record UndoableCounterState : Undoable<UndoableCounterState, CounterState>
+{
+    public static UndoableCounterState CreateInitialState()
+        => new() { Present = new(0) };
+};
+
+//public record UndoableCounterState : Undoable<UndoableCounterState, CounterState>;
+
+//public sealed class UndoableCounterFeature : Feature<UndoableCounterState>
+//{
+//    public override string GetName()
+//        => "UndoableCounter";
+
+//    protected override UndoableCounterState GetInitialState()
+//        => new() { Present = new(0) };
+//}
+#else
 [FeatureState(Name = "UndoableCounter", CreateInitialStateMethodName = nameof(CreateInitialState))]
 public record UndoableCounterState(CounterState Present)
     : Undoable<UndoableCounterState, CounterState>(Present)
@@ -14,17 +32,6 @@ public record UndoableCounterState(CounterState Present)
         => new(new CounterState(0));
 };
 
-#else
-[FeatureState(Name = "UndoableCounter", CreateInitialStateMethodName = nameof(CreateInitialState))]
-public record UndoableCounterState : Undoable<UndoableCounterState, CounterState>
-{
-    public static UndoableCounterState CreateInitialState()
-        => new() { Present = new(0) };
-};
-
-#endif
-
-//#if NET6_0
 //public record UndoableCounterState(CounterState Present)
 //    : Undoable<UndoableCounterState, CounterState>(Present);
 
@@ -36,17 +43,4 @@ public record UndoableCounterState : Undoable<UndoableCounterState, CounterState
 //    protected override UndoableCounterState GetInitialState()
 //        => new(new CounterState(0));
 //}
-
-//#else
-//public record UndoableCounterState : Undoable<UndoableCounterState, CounterState>;
-
-//public sealed class UndoableCounterFeature : Feature<UndoableCounterState>
-//{
-//    public override string GetName()
-//        => "UndoableCounter";
-
-//    protected override UndoableCounterState GetInitialState()
-//        => new() { Present = new(0) };
-//}
-
-//#endif
+#endif

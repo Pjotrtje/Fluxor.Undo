@@ -1,4 +1,4 @@
 ﻿namespace Fluxor.Undo;
 
-public sealed record JumpAction<TState>(int Amount) : IUndoableAction<TState>
-    where TState : IUndoable;
+public sealed record JumpAction<TUndoable>(int Amount) : IUndoableAction<TUndoable>
+    where TUndoable : Undoable<TUndoable>;

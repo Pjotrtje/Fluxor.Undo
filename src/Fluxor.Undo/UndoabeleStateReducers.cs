@@ -1,25 +1,25 @@
 ﻿namespace Fluxor.Undo;
 
-public abstract class UndoableStateReducers<TUndoableState>
-    where TUndoableState : Undoable<TUndoableState>
+public abstract class UndoableStateReducers<TUndoable>
+    where TUndoable : Undoable<TUndoable>
 {
     [ReducerMethod]
-    public TUndoableState OnUndoAction(TUndoableState state, UndoAction<TUndoableState> _)
+    public static TUndoable OnUndoAction(TUndoable state, UndoAction<TUndoable> _)
         => state.WithUndoOne();
 
     [ReducerMethod]
-    public TUndoableState OnJumpAction(TUndoableState state, JumpAction<TUndoableState> action)
+    public static TUndoable OnJumpAction(TUndoable state, JumpAction<TUndoable> action)
         => state.WithJump(action.Amount);
 
     [ReducerMethod]
-    public TUndoableState OnUndoAllAction(TUndoableState state, UndoAllAction<TUndoableState> _)
+    public static TUndoable OnUndoAllAction(TUndoable state, UndoAllAction<TUndoable> _)
         => state.WithUndoAll();
 
     [ReducerMethod]
-    public TUndoableState OnRedoAction(TUndoableState state, RedoAction<TUndoableState> _)
+    public static TUndoable OnRedoAction(TUndoable state, RedoAction<TUndoable> _)
         => state.WithRedoOne();
 
     [ReducerMethod]
-    public TUndoableState OnRedoAllAction(TUndoableState state, RedoAllAction<TUndoableState> _)
+    public static TUndoable OnRedoAllAction(TUndoable state, RedoAllAction<TUndoable> _)
         => state.WithRedoAll();
 }

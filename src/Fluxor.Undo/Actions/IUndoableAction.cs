@@ -1,7 +1,7 @@
 ﻿namespace Fluxor.Undo;
 
-public interface IUndoableAction<TState> : IUndoableAction
-    where TState : IUndoable
+public interface IUndoableAction<TUndoable> : IUndoableAction
+    where TUndoable : Undoable<TUndoable>
 {
 }
 
