@@ -64,35 +64,24 @@ public record Undoable<TUndoable, TState>(TState Present) : Undoable<TUndoable>
         => WithInlineEditedPresent(_ => present);
 
     public TUndoable WithInlineEditedPresent(Func<TState, TState> map)
-    {
-        var newPresent = map(Present);
+        => Self with
+        {
+            Past = Past,
+            Present = map(Present),
+            Future = Array.Empty<TState>(),
+        };
 
-        return newPresent.Equals(Present)
-            ? Self
-            : Self with
-            {
-                Past = Past,
-                Present = newPresent,
-                Future = Array.Empty<TState>(),
-            };
-    }
-
-    /// <inheritdoc/>
     public override TUndoable WithUndoAll()
         => WithJump(-Past.Count);
 
-    /// <inheritdoc/>
     public override TUndoable WithUndoOne()
         => WithJump(-1);
 
-    /// <inheritdoc/>
     public override TUndoable WithRedoOne()
         => WithJump(1);
 
-    /// <inheritdoc/>
     public override TUndoable WithRedoAll() => WithJump(Future.Count);
 
-    /// <inheritdoc/>
     public override TUndoable WithJump(int amount)
     {
         var fixedAmount = GetFixedAmount(amount);

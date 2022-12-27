@@ -259,6 +259,21 @@ public class UndoableTests
     }
 
     [Fact]
+    public void WithNewPresent_PresentIsFunction_WhenNoChange_DoesNothing()
+    {
+        var state = new UndoableIntState
+        {
+            Past = new[] { 0, 1, 2 },
+            Present = 3,
+            Future = new[] { 4, 5, 6 },
+        };
+
+        var newState = state.WithNewPresent(p => p);
+
+        newState.Should().BeEquivalentTo(state);
+    }
+
+    [Fact]
     public void WithInlineEditedPresent_PresentIsObject_MovesPresentToPast_AddsNewPresent_RemovedFuture()
     {
         var state = new UndoableIntState
