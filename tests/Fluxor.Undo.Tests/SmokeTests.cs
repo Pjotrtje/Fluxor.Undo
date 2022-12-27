@@ -9,7 +9,7 @@ namespace Fluxor.Undo.Tests;
 public class SmokeTests
 {
     [Fact]
-    public async Task ToDo()
+    public async Task SmokeTestReducer()
     {
         await using var serviceProvider = GetServiceProvider();
 
@@ -44,7 +44,7 @@ public class SmokeTests
         public void Execute()
         {
             Dispatch(
-                new IncrementCounterAction(12),
+                new IncrementCounterAction(1),
                 new IncrementCounterAction(10),
                 new IncrementCounterAction(2),
                 new UndoAction<UndoableCounterState>());
