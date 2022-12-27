@@ -1,7 +1,7 @@
 ﻿using Fluxor;
 using Fluxor.Undo;
 
-namespace FluxorBlazorWeb.ReduxDevToolsTutorial.Client.Features.UndoableCounter.Store;
+namespace BlazorClient.Features.UndoableCounterWithPersistence.Store;
 
 public class Reducers : UndoableStateReducers<UndoableCounterState>
 {
@@ -11,4 +11,11 @@ public class Reducers : UndoableStateReducers<UndoableCounterState>
         {
             ClickCount = p.ClickCount + action.Amount,
         });
+
+    [ReducerMethod]
+    public static UndoableCounterState ReducePersistAction(UndoableCounterState state, PersistAction _)
+        => state with
+        {
+            Persisted = state.Present,
+        };
 }

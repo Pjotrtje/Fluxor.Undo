@@ -1,10 +1,10 @@
 ﻿using Fluxor;
 
-using FluxorBlazorWeb.ReduxDevToolsTutorial.Client.Features.UndoableCounterWithPersistence.Store;
+using BlazorClient.Features.UndoableCounter.Store;
 
 using Microsoft.AspNetCore.Components;
 
-namespace FluxorBlazorWeb.ReduxDevToolsTutorial.Client.Features.UndoableCounterWithPersistence;
+namespace BlazorClient.Features.UndoableCounter;
 
 public partial class UndoableCounter
 {

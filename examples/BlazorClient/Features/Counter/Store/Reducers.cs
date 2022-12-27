@@ -1,6 +1,6 @@
 ﻿using Fluxor;
 
-namespace FluxorBlazorWeb.ReduxDevToolsTutorial.Client.Features.Counter.Store;
+namespace BlazorClient.Features.Counter.Store;
 
 public static class Reducers
 {

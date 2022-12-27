@@ -4,20 +4,5 @@
         <name>Fluxor.Undo</name>
     </assembly>
     <members>
-        <member name="M:Fluxor.Undo.Undoable`2.WithUndoAll">
-            <inheritdoc/>
-        </member>
-        <member name="M:Fluxor.Undo.Undoable`2.WithUndoOne">
-            <inheritdoc/>
-        </member>
-        <member name="M:Fluxor.Undo.Undoable`2.WithRedoOne">
-            <inheritdoc/>
-        </member>
-        <member name="M:Fluxor.Undo.Undoable`2.WithRedoAll">
-            <inheritdoc/>
-        </member>
-        <member name="M:Fluxor.Undo.Undoable`2.WithJump(System.Int32)">
-            <inheritdoc/>
-        </member>
     </members>
 </doc>

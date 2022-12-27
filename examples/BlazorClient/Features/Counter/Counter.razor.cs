@@ -1,10 +1,10 @@
 ﻿using Fluxor;
 
-using FluxorBlazorWeb.ReduxDevToolsTutorial.Client.Features.Counter.Store;
+using BlazorClient.Features.Counter.Store;
 
 using Microsoft.AspNetCore.Components;
 
-namespace FluxorBlazorWeb.ReduxDevToolsTutorial.Client.Features.Counter;
+namespace BlazorClient.Features.Counter;
 
 public partial class Counter
 {
