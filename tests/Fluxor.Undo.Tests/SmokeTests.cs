@@ -30,7 +30,7 @@ public class SmokeTests
         return services.BuildServiceProvider();
     }
 
-    private class TestFlow
+    private sealed class TestFlow
     {
         private readonly IDispatcher _dispatcher;
         private readonly IState<UndoableCounterState> _state;
@@ -44,7 +44,7 @@ public class SmokeTests
         public void Execute()
         {
             Dispatch(
-                new IncrementCounterAction(1),
+                new IncrementCounterAction(12),
                 new IncrementCounterAction(10),
                 new IncrementCounterAction(2),
                 new UndoAction<UndoableCounterState>());
