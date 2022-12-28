@@ -136,6 +136,6 @@ stages:
             displayName: 'Push to nuget.org'
             inputs:
               command: 'push'
-              packagesToPush: '$(Agent.TempDirectory)/NuGet/**/*.nupkg;$(Agent.TempDirectory)/NuGet/**/*.snupkg'
+              packagesToPush: '$(Agent.TempDirectory)/NuGet/**/*.nupkg'
               nuGetFeedType: 'external'
               publishFeedCredentials: 'NuGet.org'
