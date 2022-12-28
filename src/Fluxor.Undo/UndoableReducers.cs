@@ -1,6 +1,6 @@
 ﻿namespace Fluxor.Undo;
 
-public abstract class UndoableStateReducers<TUndoable>
+public abstract class UndoableReducers<TUndoable>
     where TUndoable : Undoable<TUndoable>
 {
     [ReducerMethod]

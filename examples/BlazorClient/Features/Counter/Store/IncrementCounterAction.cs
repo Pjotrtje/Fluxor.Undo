@@ -1,3 +1,3 @@
 ﻿namespace BlazorClient.Features.Counter.Store;
 
-public record IncrementCounterAction(int Amount);
+public sealed record IncrementCounterAction(int Amount);

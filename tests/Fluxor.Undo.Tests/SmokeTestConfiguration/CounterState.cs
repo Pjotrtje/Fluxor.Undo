@@ -2,10 +2,10 @@
 
 namespace Fluxor.Undo.Tests.SmokeTestConfiguration;
 
-public record CounterState(int ClickCount);
+public sealed record CounterState(int ClickCount);
 
 [FeatureState(Name = "UndoableCounter", CreateInitialStateMethodName = nameof(CreateInitialState))]
-public record UndoableCounterState : Undoable<UndoableCounterState, CounterState>
+public sealed record UndoableCounterState : Undoable<UndoableCounterState, CounterState>
 {
     public static UndoableCounterState CreateInitialState()
         => new() { Present = new(0) };

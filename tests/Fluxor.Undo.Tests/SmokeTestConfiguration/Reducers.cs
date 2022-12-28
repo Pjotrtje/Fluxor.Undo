@@ -2,7 +2,7 @@
 
 namespace Fluxor.Undo.Tests.SmokeTestConfiguration;
 
-public class Reducers : UndoableStateReducers<UndoableCounterState>
+public class Reducers : UndoableReducers<UndoableCounterState>
 {
     [ReducerMethod]
     public static UndoableCounterState ReduceIncrementCounterAction(UndoableCounterState state, IncrementCounterAction action)

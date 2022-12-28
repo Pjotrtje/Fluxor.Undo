@@ -1,3 +1,3 @@
 ﻿namespace Fluxor.Undo.Tests.SmokeTestConfiguration;
 
-public record IncrementCounterAction(int Amount);
+public sealed record IncrementCounterAction(int Amount);

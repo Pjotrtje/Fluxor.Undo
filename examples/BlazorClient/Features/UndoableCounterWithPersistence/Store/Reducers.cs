@@ -3,7 +3,7 @@ using Fluxor.Undo;
 
 namespace BlazorClient.Features.UndoableCounterWithPersistence.Store;
 
-public class Reducers : UndoableStateReducers<UndoableCounterState>
+public class Reducers : UndoableReducers<UndoableCounterState>
 {
     [ReducerMethod]
     public static UndoableCounterState ReduceIncrementCounterAction(UndoableCounterState state, IncrementCounterAction action)

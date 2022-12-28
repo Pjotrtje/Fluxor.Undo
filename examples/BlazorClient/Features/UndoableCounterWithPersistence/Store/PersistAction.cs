@@ -1,3 +1,3 @@
 ﻿namespace BlazorClient.Features.UndoableCounterWithPersistence.Store;
 
-public record PersistAction;
+public sealed record PersistAction;

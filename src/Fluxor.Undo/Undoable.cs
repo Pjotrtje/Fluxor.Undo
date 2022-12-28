@@ -18,14 +18,14 @@ public abstract record Undoable<TUndoable>
 }
 
 #if NET7_0_OR_GREATER
-public record Undoable<TUndoable, TState> : Undoable<TUndoable>
+public abstract record Undoable<TUndoable, TState> : Undoable<TUndoable>
     where TUndoable : Undoable<TUndoable, TState>
     where TState : notnull
 {
     public required TState Present { get; init; }
 #else
 
-public record Undoable<TUndoable, TState>(TState Present) : Undoable<TUndoable>
+public abstract record Undoable<TUndoable, TState>(TState Present) : Undoable<TUndoable>
     where TUndoable : Undoable<TUndoable, TState>
     where TState : notnull
 {
