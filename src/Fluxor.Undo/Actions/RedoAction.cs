@@ -1,6 +1,4 @@
 ﻿namespace Fluxor.Undo;
 
-/// <summary>
-/// ToDo
-/// </summary>
-public sealed record RedoAction<TState> : IUndoableAction<TState>;
+public sealed record RedoAction<TUndoable> : IUndoableAction<TUndoable>
+    where TUndoable : Undoable<TUndoable>;

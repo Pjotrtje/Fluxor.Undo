@@ -1,15 +1,10 @@
 ﻿namespace Fluxor.Undo;
 
-/// <summary>
-/// ToDo
-/// </summary>
-public interface IUndoableAction<TState> : IUndoableAction
+public interface IUndoableAction
 {
 }
 
-/// <summary>
-/// ToDo
-/// </summary>
-public interface IUndoableAction
+public interface IUndoableAction<TUndoable> : IUndoableAction
+    where TUndoable : Undoable<TUndoable>
 {
 }

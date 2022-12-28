@@ -1,0 +1,26 @@
+﻿@page "/undoablecounterwithpersistence"
+@using Fluxor.Undo
+@using BlazorClient.Features.UndoableCounterWithPersistence.Store
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<h1>Counter</h1>
+
+<p>Current count: @UndoableCounterState.Value.Present.ClickCount</p>
+
+<button class="btn btn-primary" @onclick=@(() => Dispatcher.Dispatch(new IncrementCounterAction(1)))>+1</button>
+<button class="btn btn-primary" @onclick=@(() => Dispatcher.Dispatch(new IncrementCounterAction(10)))>+10</button>
+<button class="btn btn-secondary" @onclick=@(() => Dispatcher.Dispatch(new UndoAllAction<UndoableCounterState>())) disabled="@UndoableCounterState.Value.HasNoPast">&lt;&lt;</button>
+<button class="btn btn-secondary" @onclick=@(() => Dispatcher.Dispatch(new UndoAction<UndoableCounterState>())) disabled="@UndoableCounterState.Value.HasNoPast">&lt;</button>
+<button class="btn btn-secondary" @onclick=@(() => Dispatcher.Dispatch(new RedoAction<UndoableCounterState>())) disabled="@UndoableCounterState.Value.HasNoFuture">&gt;</button>
+<button class="btn btn-secondary" @onclick=@(() => Dispatcher.Dispatch(new RedoAllAction<UndoableCounterState>())) disabled="@UndoableCounterState.Value.HasNoFuture">&gt;&gt;</button>
+    
+<!--In a real world app this dispatch of PersistAction should be done in an effect I guess.-->
+<button class="btn btn-primary" @onclick=@(() => Dispatcher.Dispatch(new PersistAction())) disabled="@UndoableCounterState.Value.IsPersisted">Save</button>
+
+
+@if (!UndoableCounterState.Value.IsPersisted)
+{
+    <div class="alert alert-warning" role="alert">
+        Unsaved changes!
+    </div>
+}

@@ -1,0 +1,10 @@
+﻿@page "/counter"
+@using BlazorClient.Features.Counter.Store
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+<h1>Counter</h1>
+
+<p>Current count: @CounterState.Value.ClickCount</p>
+
+<button class="btn btn-primary" @onclick=@(() => Dispatcher.Dispatch(new IncrementCounterAction(1)))>+1</button>
+<button class="btn btn-primary" @onclick=@(() => Dispatcher.Dispatch(new IncrementCounterAction(10)))>+10</button>

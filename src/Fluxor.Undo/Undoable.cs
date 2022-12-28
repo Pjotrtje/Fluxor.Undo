@@ -1,143 +1,102 @@
 ﻿namespace Fluxor.Undo;
 
-/// <summary>
-/// ToDo
-/// </summary>
-public static class Undoable
+public abstract record Undoable<TUndoable>
 {
-    /// <summary>
-    /// ToDo
-    /// </summary>
-    public static Undoable<TState> Create<TState>(TState present)
-        where TState : notnull
-        => new(
-            Array.Empty<TState>(),
-            present,
-            Array.Empty<TState>());
-
-    /// <summary>
-    /// ToDo
-    /// </summary>
-    public static Undoable<TState> Create<TState>(IReadOnlyList<TState> status, int indexOfPresent)
-        where TState : notnull
+    private protected Undoable()
     {
-        var index = GetFixedIndexOfPresent(status, indexOfPresent);
-        return new(
-            status.Take(index).ToList(),
-            status[index],
-            status.Skip(index + 1).ToList());
     }
 
-    private static int GetFixedIndexOfPresent<TState>(IReadOnlyList<TState> status, int indexOfPresent)
-    {
-        if (indexOfPresent > status.Count)
-        {
-            return status.Count - 1;
-        }
+    public abstract TUndoable WithUndoAll();
 
-        if (indexOfPresent < 0)
-        {
-            return 0;
-        }
+    public abstract TUndoable WithUndoOne();
 
-        return indexOfPresent;
-    }
+    public abstract TUndoable WithRedoOne();
+
+    public abstract TUndoable WithRedoAll();
+
+    public abstract TUndoable WithJump(int amount);
 }
 
-/// <summary>
-/// ToDo
-/// </summary>
-public sealed record Undoable<TState>(
-    IReadOnlyList<TState> Past,
-    TState Present,
-    IReadOnlyList<TState> Future)
+#if NET7_0_OR_GREATER
+public abstract record Undoable<TUndoable, TState> : Undoable<TUndoable>
+    where TUndoable : Undoable<TUndoable, TState>
     where TState : notnull
 {
-    /// <summary>
-    /// ToDo
-    /// </summary>
-    public TimeTravelInfo TimeTravelInfo { get; } = new(Past.Any(), Future.Any());
+    public required TState Present { get; init; }
+#else
 
-    /// <summary>
-    /// ToDo
-    /// </summary>
-    public Undoable<TState> WithNewPresent(TState present)
+public abstract record Undoable<TUndoable, TState>(TState Present) : Undoable<TUndoable>
+    where TUndoable : Undoable<TUndoable, TState>
+    where TState : notnull
+{
+#endif
+
+    public IReadOnlyList<TState> Past { get; init; } = Array.Empty<TState>();
+
+    public IReadOnlyList<TState> Future { get; init; } = Array.Empty<TState>();
+
+    public bool HasPast => Past.Any();
+
+    public bool HasNoPast => !HasPast;
+
+    public bool HasFuture => Future.Any();
+
+    public bool HasNoFuture => !HasFuture;
+
+    public TUndoable WithNewPresent(TState present)
         => WithNewPresent(_ => present);
 
-    /// <summary>
-    /// ToDo
-    /// </summary>
-    public Undoable<TState> WithNewPresent(Func<TState, TState> map)
+    public TUndoable WithNewPresent(Func<TState, TState> map)
     {
         var newPresent = map(Present);
 
         return newPresent.Equals(Present)
-            ? this
-            : new(
-                Past.Append(Present).ToList(),
-                newPresent,
-                Array.Empty<TState>());
+            ? Self
+            : Self with
+            {
+                Past = Past.Append(Present).ToList(),
+                Present = newPresent,
+                Future = Array.Empty<TState>(),
+            };
     }
 
-    /// <summary>
-    /// ToDo
-    /// </summary>
-    public Undoable<TState> WithInlineEditedPresent(TState present)
+    public TUndoable WithInlineEditedPresent(TState present)
         => WithInlineEditedPresent(_ => present);
 
-    /// <summary>
-    /// ToDo
-    /// </summary>
-    public Undoable<TState> WithInlineEditedPresent(Func<TState, TState> map)
-    {
-        var newPresent = map(Present);
+    public TUndoable WithInlineEditedPresent(Func<TState, TState> map)
+        => Self with
+        {
+            Past = Past,
+            Present = map(Present),
+            Future = Array.Empty<TState>(),
+        };
 
-        return newPresent.Equals(Present)
-            ? this
-            : new(
-                Past,
-                newPresent,
-                Array.Empty<TState>());
-    }
-
-    /// <summary>
-    /// ToDo
-    /// </summary>
-    public Undoable<TState> WithUndoAll()
+    public override TUndoable WithUndoAll()
         => WithJump(-Past.Count);
 
-    /// <summary>
-    /// ToDo
-    /// </summary>
-    public Undoable<TState> WithUndoOne()
+    public override TUndoable WithUndoOne()
         => WithJump(-1);
 
-    /// <summary>
-    /// ToDo
-    /// </summary>
-    public Undoable<TState> WithRedoOne()
+    public override TUndoable WithRedoOne()
         => WithJump(1);
 
-    /// <summary>
-    /// ToDo
-    /// </summary>
-    public Undoable<TState> WithRedoAll()
-        => WithJump(Future.Count);
+    public override TUndoable WithRedoAll() => WithJump(Future.Count);
 
-    /// <summary>
-    /// ToDo
-    /// </summary>
-    public Undoable<TState> WithJump(int amount)
+    public override TUndoable WithJump(int amount)
     {
         var fixedAmount = GetFixedAmount(amount);
         return fixedAmount switch
         {
-            0 => this,
+            0 => Self,
             < 0 => WithJumpToPast(-fixedAmount),
             > 0 => WithJumpToFuture(fixedAmount),
         };
     }
-    private Undoable<TState> WithJumpToPast(int amount)
+
+    private TUndoable Self
+        => (TUndoable)this;
+
+    private TUndoable WithJumpToPast(int amount)
     {
         var past = Past
             .SkipLast(amount)
@@ -149,13 +108,15 @@ public sealed record Undoable<TState>(
             .Concat(Future)
             .ToList();
 
-        return new(
-            past,
-            Past[^amount],
-            future);
+        return Self with
+        {
+            Past = past,
+            Present = Past[^amount],
+            Future = future,
+        };
     }
 
-    private Undoable<TState> WithJumpToFuture(int amount)
+    private TUndoable WithJumpToFuture(int amount)
     {
         var futureToPast = Future.Take(amount - 1);
         var past = Past
@@ -167,10 +128,12 @@ public sealed record Undoable<TState>(
             .Skip(amount)
             .ToList();
 
-        return new(
-            past,
-            Future[amount - 1],
-            future);
+        return Self with
+        {
+            Past = past,
+            Present = Future[amount - 1],
+            Future = future,
+        };
     }
 
     private int GetFixedAmount(int amount)

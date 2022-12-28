@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{AB96C6E7-1
 	ProjectSection(SolutionItems) = preProject
 		docs\icon-128x128.png = docs\icon-128x128.png
 		docs\icon-512x512.png = docs\icon-512x512.png
+		docs\persist_demo.gif = docs\persist_demo.gif
+		docs\undo_demo.gif = docs\undo_demo.gif
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{6D871756-93F4-46B3-BA64-93A04213901B}"
@@ -31,7 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{562D9D20
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxor.Undo.Tests", "tests\Fluxor.Undo.Tests\Fluxor.Undo.Tests.csproj", "{F51D3DC3-CFCB-47F0-9049-A7BEE5DAB2AD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluxorBlazorWeb.ReduxDevToolsTutorial.Client", "examples\Client\FluxorBlazorWeb.ReduxDevToolsTutorial.Client.csproj", "{4BC2DAAD-F8DC-4756-81AE-449B0BA998D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorClient", "examples\BlazorClient\BlazorClient.csproj", "{BCE6DF29-A8B6-4B79-BB19-681DC001198B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +49,10 @@ Global
 		{F51D3DC3-CFCB-47F0-9049-A7BEE5DAB2AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F51D3DC3-CFCB-47F0-9049-A7BEE5DAB2AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F51D3DC3-CFCB-47F0-9049-A7BEE5DAB2AD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4BC2DAAD-F8DC-4756-81AE-449B0BA998D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4BC2DAAD-F8DC-4756-81AE-449B0BA998D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4BC2DAAD-F8DC-4756-81AE-449B0BA998D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4BC2DAAD-F8DC-4756-81AE-449B0BA998D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCE6DF29-A8B6-4B79-BB19-681DC001198B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCE6DF29-A8B6-4B79-BB19-681DC001198B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCE6DF29-A8B6-4B79-BB19-681DC001198B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCE6DF29-A8B6-4B79-BB19-681DC001198B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,7 +60,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{131B8C69-F4BA-46FE-8A30-3BCA8CC9933F} = {FD9FF9B0-970C-4FAE-B327-1D55163E4460}
 		{F51D3DC3-CFCB-47F0-9049-A7BEE5DAB2AD} = {562D9D20-01A5-4BB3-9D2A-2278CFB882FE}
-		{4BC2DAAD-F8DC-4756-81AE-449B0BA998D5} = {6D871756-93F4-46B3-BA64-93A04213901B}
+		{BCE6DF29-A8B6-4B79-BB19-681DC001198B} = {6D871756-93F4-46B3-BA64-93A04213901B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {47B82755-5CED-4DF8-BAF2-A25F643C3C9F}

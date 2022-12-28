@@ -3,7 +3,10 @@
 
 Fluxor.Undo is a library to add redo/undo functionality to [Fluxor](https://github.com/mrpmorris/Fluxor). 
 
-![Azure DevOps builds (branch)](https://img.shields.io/azure-devops/build/Pjotrtje/PvSToDo/20/main)
+![Azure DevOps builds (branch)](https://img.shields.io/azure-devops/build/Pjotrtje/PvS/21/main)
+
+![Demo](https://raw.githubusercontent.com/Pjotrtje/Fluxor.Undo/main/docs/undo_demo.gif)
+
 
 ## Goal
 The aim of Fluxor.Undo is removing the hassle of implementing your own undo/redo functionality. The idea is inspired by [redux-undo](https://github.com/omnidan/redux-undo) although the implementation is completely different.
@@ -25,18 +28,41 @@ Steps to change your regular state to an undoable state:
 Change your state with FeatureStateAtrribute
 
 ```csharp
-[FeatureState(Name = "Counter")]
-public record CounterState(int ClickCount)
+[FeatureState(Name = "Counter", CreateInitialStateMethodName = nameof(CreateInitialState))]
+public sealed record CounterState(int ClickCount)
 {
-    private CounterState() : this(0)
-    { }
+    public static CounterState CreateInitialState()
+        => new(0);
 }
 ```
 
-or state with generic Feature
+to
 
 ```csharp
-public record CounterState(int ClickCount);
+public sealed record CounterState(int ClickCount);
+
+[FeatureState(Name = "Counter", CreateInitialStateMethodName = nameof(CreateInitialState))]
+public sealed record UndoableCounterState : Undoable<UndoableCounterState, CounterState>
+{
+    public static UndoableCounterState CreateInitialState()
+        => new() { Present = new(0) };
+}
+
+// Or when net6:
+public sealed record CounterState(int ClickCount);
+
+[FeatureState(Name = "Counter", CreateInitialStateMethodName = nameof(CreateInitialState))]
+public sealed record UndoableCounterState(CounterState Present) : Undoable<UndoableCounterState, CounterState>(Present)
+{
+    public static UndoableCounterState CreateInitialState()
+        => new(new CounterState(0));
+};
+```
+
+When using Feature baseclass change
+
+```csharp
+public sealed record CounterState(int ClickCount);
 
 public sealed class CounterFeature : Feature<CounterState>
 {
@@ -50,17 +76,30 @@ public sealed class CounterFeature : Feature<CounterState>
 
 to
 
-
 ```csharp
-public record CounterState(int ClickCount);
+public sealed record CounterState(int ClickCount);
+public sealed record UndoableCounterState : Undoable<UndoableCounterState, CounterState>;
 
-public sealed class UndoableCounterFeature : UndoableFeature<CounterState>
+public sealed class UndoableCounterFeature : Feature<UndoableCounterState>
 {
     public override string GetName()
         => "Counter";
 
-    protected override Undoable<CounterState> GetInitialState()
-        => Undoable.Create(new CounterState(0));
+    protected override UndoableCounterState GetInitialState()
+        => new() { Present = new(0) };
+}
+
+// Or when net6:
+public sealed record CounterState(int ClickCount);
+public sealed record UndoableCounterState(CounterState Present) : Undoable<UndoableCounterState, CounterState>(Present);
+
+public sealed class UndoableCounterFeature : Feature<UndoableCounterState>
+{
+    public override string GetName()
+        => "Counter";
+
+    protected override UndoableCounterState GetInitialState()
+        => new(new CounterState(0));
 }
 ```
 
@@ -82,16 +121,17 @@ to
 
 
 ```csharp
-public class Reducers : UndoableStateReducers<CounterState>
+public class Reducers : UndoableReducers<UndoableCounterState>
 {
     [ReducerMethod]
-    public static Undoable<CounterState> ReduceIncrementCounterAction(Undoable<CounterState> state, IncrementCounterAction action)
+    public static UndoableCounterState ReduceIncrementCounterAction(UndoableCounterState state, IncrementCounterAction action)
         => state.WithNewPresent(p => p with
         {
             ClickCount = p.ClickCount + action.Amount,
         });
 }
 ```
+
 
 **3) Update your injected IState properties**
 Change setting of properties in your Razor pages from
@@ -104,35 +144,65 @@ to
 
 ```csharp
     [Inject]
-    private IState<Undoable<CounterState>> UndoableCounterState { get; set; } = null!;
+    private IState<UndoableCounterState> UndoableCounterState { get; set; } = null!;
 ```
 
 **4) Update usages of your state**
 Change usage in your Razor pages from
 ```cshtml 
 <p>Current count: @CounterState.Value.ClickCount</p>
-
-<button class="btn btn-primary" @onclick=@(() => Dispatcher.Dispatch(new IncrementCounterAction(1)))>+1</button>
-<button class="btn btn-primary" @onclick=@(() => Dispatcher.Dispatch(new IncrementCounterAction(10)))>+10</button>
 ```
 
 to
 
 ```cshtml
 <p>Current count: @UndoableCounterState.Value.Present.ClickCount</p>
-
-<button class="btn btn-primary" @onclick=@(() => Dispatcher.Dispatch(new IncrementCounterAction(1)))>+1</button>
-<button class="btn btn-primary" @onclick=@(() => Dispatcher.Dispatch(new IncrementCounterAction(10)))>+10</button>
-<button class="btn btn-primary" @onclick=@(() => Dispatcher.Dispatch(new UndoAllAction<CounterState>())) disabled="@UndoableCounterState.Value.TimeTravelInfo.HasNoPast">&lt;&lt;</button>
-<button class="btn btn-primary" @onclick=@(() => Dispatcher.Dispatch(new UndoAction<CounterState>())) disabled="@UndoableCounterState.Value.TimeTravelInfo.HasNoPast">&lt;</button>
-<button class="btn btn-primary" @onclick=@(() => Dispatcher.Dispatch(new RedoAction<CounterState>())) disabled="@UndoableCounterState.Value.TimeTravelInfo.HasNoFuture">&gt;</button>
-<button class="btn btn-primary" @onclick=@(() => Dispatcher.Dispatch(new RedoAllAction<CounterState>())) disabled="@UndoableCounterState.Value.TimeTravelInfo.HasNoFuture">&gt;&gt;</button>
 ```
 
-Also see example project in solution. Here both the regular counter as the undoable counter are implemented.
+**5) Add some navigation buttons**
+```cshtml
+<button class="btn btn-secondary" @onclick=@(() => Dispatcher.Dispatch(new UndoAllAction<UndoableCounterState>())) disabled="@UndoableCounterState.Value.HasNoPast">&lt;&lt;</button>
+<button class="btn btn-secondary" @onclick=@(() => Dispatcher.Dispatch(new UndoAction<UndoableCounterState>())) disabled="@UndoableCounterState.Value.HasNoPast">&lt;</button>
+<button class="btn btn-secondary" @onclick=@(() => Dispatcher.Dispatch(new RedoAction<UndoableCounterState>())) disabled="@UndoableCounterState.Value.HasNoFuture">&gt;</button>
+<button class="btn btn-secondary" @onclick=@(() => Dispatcher.Dispatch(new RedoAllAction<UndoableCounterState>())) disabled="@UndoableCounterState.Value.HasNoFuture">&gt;&gt;</button>
+```
+
+Also see example project in solution. Here both the Fluxor counter as Fluxor.Undo counter are implemented.
+
+
+## Available undo/redo actions
+```csharp
+Dispatcher.Dispatch(new UndoAction<T>()); // undo the last action
+Dispatcher.Dispatch(new UndoAllAction<T>()); // undo all actions
+
+Dispatcher.Dispatch(new RedoAction<T>()); // redo the last action
+Dispatcher.Dispatch(new RedoAllAction<T>()); // redo all actions
+
+Dispatcher.Dispatch(new JumpAction<T>(-2)); // undo 2 steps
+Dispatcher.Dispatch(new JumpAction<T>(5)); // redo 5 steps
+```
+
+## Helper methods on state
+```csharp
+public sealed record CounterState(int ClickCount);
+public sealed record UndoableCounterState : Undoable<UndoableCounterState, CounterState>;
+var state = new UndoableCounterState { Present = new CounterState { ClickCount = 0}};
+
+var newState1 = state.WithNewPresent(p => p with { ClickCount = p.ClickCount + 1 }); // Moves current present to past and sets new present
+var newState2 = state.WithNewPresent(new CounterState { ClickCount = 1}); // Moves current present to past and sets new present
+var newState3 = state.WithInlineEditedPresent(p => p with { ClickCount = p.ClickCount + 1 }); // Does NOT move current present to past; it will replace current present
+var newState4 = state.WithInlineEditedPresent(new CounterState { ClickCount = 1}); // Does NOT move current present to past; it will replace current present
+
+```
+## Tips
+1) When you are allowing undo/redo, the undo/redo is done on client side. So make sure that user knows that undo-ing does not alter data on server. There is a basic implementation in the example project in solution; page: Fluxor.Undo (Persist). Can be used as inspiration!
+![Demo](https://raw.githubusercontent.com/Pjotrtje/Fluxor.Undo/main/docs/persist_demo.gif)
+2) If you are using net6; upgrade to net7 so you can use the parameterless ctors and use the required properties :).
+
 
 ## Release notes
 See the [Releases page](https://github.com/Pjotrtje/Fluxor.Undo/releases/).
+
 
 ## Versioning
 Fluxor.Undo follows [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html) for the releases published to [nuget.org](https://www.nuget.org/).
