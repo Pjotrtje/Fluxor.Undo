@@ -59,7 +59,7 @@ public sealed record UndoableCounterState(CounterState Present) : Undoable<Undoa
 };
 ```
 
-or state with generic Feature
+When using Feature baseclass change
 
 ```csharp
 public sealed record CounterState(int ClickCount);
@@ -83,7 +83,7 @@ public sealed record UndoableCounterState : Undoable<UndoableCounterState, Count
 public sealed class UndoableCounterFeature : Feature<UndoableCounterState>
 {
     public override string GetName()
-        => "UndoableCounter";
+        => "Counter";
 
     protected override UndoableCounterState GetInitialState()
         => new() { Present = new(0) };
@@ -96,7 +96,7 @@ public sealed record UndoableCounterState(CounterState Present) : Undoable<Undoa
 public sealed class UndoableCounterFeature : Feature<UndoableCounterState>
 {
     public override string GetName()
-        => "UndoableCounter";
+        => "Counter";
 
     protected override UndoableCounterState GetInitialState()
         => new(new CounterState(0));
@@ -170,12 +170,12 @@ to
 Also see example project in solution. Here both the Fluxor counter as Fluxor.Undo counter are implemented.
 
 
-## Available undo/redo Actions
+## Available undo/redo actions
 ```csharp
 Dispatcher.Dispatch(new UndoAction<T>()); // undo the last action
 Dispatcher.Dispatch(new UndoAllAction<T>()); // undo all actions
 
-Dispatcher.Dispatch(new RedoActionX<T>()); // redo the last action
+Dispatcher.Dispatch(new RedoAction<T>()); // redo the last action
 Dispatcher.Dispatch(new RedoAllAction<T>()); // redo all actions
 
 Dispatcher.Dispatch(new JumpAction<T>(-2)); // undo 2 steps
