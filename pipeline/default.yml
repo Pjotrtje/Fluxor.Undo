@@ -132,6 +132,6 @@ stages:
           - task: NuGetCommand@2
             inputs:
               command: 'push'
-              packagesToPush: '$(Agent.TempDirectory)/NuGet/**/*.nupkg;!$(Agent.TempDirectory)/NuGet/**/*.symbols.nupkg'
+              packagesToPush: '$(Agent.TempDirectory)/NuGet/**/*.nupkg;$(Agent.TempDirectory)/NuGet/**/*.snupkg'
               nuGetFeedType: 'external'
               publishFeedCredentials: 'NuGet.org'
