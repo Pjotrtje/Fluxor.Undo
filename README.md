@@ -190,12 +190,12 @@ var state = new UndoableCounterState { Present = new CounterState { ClickCount =
 
 var newState1 = state.WithNewPresent(p => p with { ClickCount = p.ClickCount + 1 }); // Moves current present to past and sets new present
 var newState2 = state.WithNewPresent(new CounterState { ClickCount = 1}); // Moves current present to past and sets new present
-var newState3 = state.WithInlineEditedPresent(p => p with { ClickCount = p.ClickCount + 1 }); // Doest NOT move current present to past and replaces current present
-var newState4 = state.WithInlineEditedPresent(new CounterState { ClickCount = 1}); // Doest NOT move current present to past and replaces current present
+var newState3 = state.WithInlineEditedPresent(p => p with { ClickCount = p.ClickCount + 1 }); // Does NOT move current present to past; it will replace current present
+var newState4 = state.WithInlineEditedPresent(new CounterState { ClickCount = 1}); // Does NOT move current present to past; it will replace current present
 
 ```
 ## Tips
-1) When you are allowing undo/redo, the undo/redo is done on the client side. So make sure that user knows that undo-ing does not alter data on server. There is a basic implementation in the example project in solution; page: Fluxor.Undo (Persist). Can be used as inspiration!
+1) When you are allowing undo/redo, the undo/redo is done on client side. So make sure that user knows that undo-ing does not alter data on server. There is a basic implementation in the example project in solution; page: Fluxor.Undo (Persist). Can be used as inspiration!
 ![Demo](https://raw.githubusercontent.com/Pjotrtje/Fluxor.Undo/main/docs/persist_demo.gif)
 2) If you are using net6; upgrade to net7 so you can use the parameterless ctors and use the required properties :).
 

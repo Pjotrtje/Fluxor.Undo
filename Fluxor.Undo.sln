@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{AB96C6E7-1
 	ProjectSection(SolutionItems) = preProject
 		docs\icon-128x128.png = docs\icon-128x128.png
 		docs\icon-512x512.png = docs\icon-512x512.png
+		docs\persist_demo.gif = docs\persist_demo.gif
+		docs\undo_demo.gif = docs\undo_demo.gif
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{6D871756-93F4-46B3-BA64-93A04213901B}"

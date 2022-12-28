@@ -8,10 +8,10 @@
     <Version></Version>
     <Authors>Pieter van Sambeek</Authors>
     <PackageIcon>icon-128x128.png</PackageIcon>
-    <PackageProjectUrl>https://github.com/Pjotrtje/Fuxor.Undo</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/Pjotrtje/Fluxor.Undo</PackageProjectUrl>
     <Copyright>Copyright Pieter van Sambeek</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageReleaseNotes>https://github.com/Pjotrtje/Fuxor.Undo/releases/</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/Pjotrtje/Fluxor.Undo/releases/</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <DocumentationFile>$(MSBuildProjectName).xml</DocumentationFile>
